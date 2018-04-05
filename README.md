@@ -84,16 +84,17 @@ make
 make check
 ```
 
-### Try a Domino Example
+### Try Domino
 
 Clone the domino examples:
 
 ```
 git clone https://github.com/packet-transactions/domino-examples.git
 cd domino-examples
+cp -r ../domino-compiler/domino ./
 ```
 
-Try flowlet introduced in SIGCOMM paper:
+**Try flowlet introduced in SIGCOMM paper:**
 
 ```
 ./compile.sh domino_programs/flowlets.c banzai_atoms/pair.sk 30 10
@@ -107,10 +108,58 @@ Warning: /tmp/error.log: syntax error in line 1 near '.'
 Pipeline diagram at /tmp/pipeline.png
 ```
 
-Try `run_expt.py`:
+**Try `run_expt.py`:**
 
 ```
 python run_expts.py domino_programs.list atom_templates.list
+```
+
+This script executes domino mapping of these domino programs (in domino_programs.list)...
+
+```
+domino_programs/learn_filter.c
+domino_programs/heavy_hitters.c
+domino_programs/flowlets.c
+domino_programs/flowlets_intuitive.c
+domino_programs/rcp.c
+domino_programs/sampling.c
+domino_programs/hull.c
+domino_programs/avq.c
+domino_programs/dns_ttl_change.c
+domino_programs/stfq.c
+domino_programs/conga.c
+domino_programs/codel.c
+domino_programs/trTCM.c
+```
+
+...on these kinds of stateful atoms (in atom_templates.list):
+
+```
+banzai_atoms/rw.sk
+banzai_atoms/raw.sk
+banzai_atoms/pred_raw.sk
+banzai_atoms/if_else_raw.sk
+banzai_atoms/sub.sk
+banzai_atoms/nested_ifs.sk
+banzai_atoms/pair.sk
+```
+
+The results of executing `run_expy.py`:
+
+```
+domino_programs/learn_filter.c            True            True            True            True            True            True            True
+domino_programs/heavy_hitters.c           False            True            True            True            True            True            True
+domino_programs/flowlets.c           False           False            True            True            True            True            True
+domino_programs/flowlets_intuitive.c           False           False            True            True            True            True            True
+domino_programs/rcp.c           False           False            True            True            True            True            True
+domino_programs/sampling.c           False           False           False            True            True            True            True
+domino_programs/hull.c           False           False           False           False            True            True            True
+domino_programs/avq.c           False           False           False           False           False            True            True
+domino_programs/dns_ttl_change.c           False           False           False           False           False            True            True
+domino_programs/stfq.c           False           False           False           False           False            True            True
+domino_programs/conga.c           False           False           False           False           False           False            True
+domino_programs/codel.c           False           False           False           False           False           False           False
+domino_programs/trTCM.c           False           False           False           False           False           False           False
 ```
 
 ## Known Issues
@@ -150,3 +199,7 @@ OSError: [Errno 2] No such file or directory
 ```
 
 To resolve this problem, you should add an extra parameter 'shell=True' to the Popen call at [run_expts.py#L27](https://github.com/packet-transactions/domino-examples/blob/master/run_expts.py#L27). 
+
+## Author
+
+Wasdns (Xiang Chen) - wasdnsxchen@gmail.com
