@@ -84,6 +84,35 @@ make
 make check
 ```
 
+### Try a Domino Example
+
+Clone the domino examples:
+
+```
+git clone https://github.com/packet-transactions/domino-examples.git
+cd domino-examples
+```
+
+Try flowlet introduced in SIGCOMM paper:
+
+```
+./compile.sh domino_programs/flowlets.c banzai_atoms/pair.sk 30 10
+```
+
+The output mapping is avaiable at "/tmp/pipeline.png":
+
+```
+Found a mapping
+Warning: /tmp/error.log: syntax error in line 1 near '.'
+Pipeline diagram at /tmp/pipeline.png
+```
+
+Try `run_expt.py`:
+
+```
+python run_expts.py domino_programs.list atom_templates.list
+```
+
 ## Known Issues
 
 1.Install domino compiler. As executing `make`: "experimental/tuple: No such file or directory":
@@ -102,3 +131,22 @@ make: *** [all] Error 2
 ```
 
 This bug can be reproduced when you are using `g++` which version <= 5.0. Updating your g++ can resolve this problem.
+
+2.As executing : subprocess.Popen "OSError: [Errno 2] No such file or directory"
+
+```
+Traceback (most recent call last):
+  File "run_expts.py", line 53, in <module>
+    all_codelets_mapped = check_compile(domino_file, atom_template, True);
+  File "run_expts.py", line 10, in check_compile
+    out,err = program_wrapper(program = ["domino", domino_file, atom_template, "30", "10", "yes" if run_preproc else ""])
+  File "run_expts.py", line 27, in program_wrapper
+    sp = subprocess.Popen(program, stdout = t_stdout, stderr = t_stderr)
+  File "/usr/lib/python2.7/subprocess.py", line 710, in __init__
+    errread, errwrite)
+  File "/usr/lib/python2.7/subprocess.py", line 1327, in _execute_child
+    raise child_exception
+OSError: [Errno 2] No such file or directory
+```
+
+To resolve this problem, you should add an extra parameter 'shell=True' to the Popen call at [run_expts.py#L27](https://github.com/packet-transactions/domino-examples/blob/master/run_expts.py#L27). 
