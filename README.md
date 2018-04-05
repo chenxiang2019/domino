@@ -164,7 +164,9 @@ domino_programs/trTCM.c           False           False           False         
 
 ## Known Issues
 
-1.Install domino compiler. As executing `make`: "experimental/tuple: No such file or directory":
+1.Install domino compiler. As executing `make`: 
+
+"experimental/tuple: No such file or directory":
 
 ```
 In file included from domino.cc:33:0:
@@ -181,7 +183,9 @@ make: *** [all] Error 2
 
 This bug can be reproduced when you are using `g++` which version <= 5.0. Updating your g++ can resolve this problem.
 
-2.As executing : subprocess.Popen "OSError: [Errno 2] No such file or directory"
+2.As executing `python run_expts.py domino_programs.list atom_templates.list`: 
+
+subprocess.Popen "OSError: [Errno 2] No such file or directory"
 
 ```
 Traceback (most recent call last):
@@ -198,7 +202,7 @@ Traceback (most recent call last):
 OSError: [Errno 2] No such file or directory
 ```
 
-To resolve this problem, you should add an extra parameter 'shell=True' to the Popen call at [run_expts.py#L27](https://github.com/packet-transactions/domino-examples/blob/master/run_expts.py#L27). 
+To resolve this problem, you should copy the `domino` executable file to the directory of `domino-examples`.
 
 ## Author
 
